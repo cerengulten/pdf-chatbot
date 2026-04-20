@@ -1,0 +1,18 @@
+# Web Server
+fastapi
+uvicorn
+python-multipart
+
+# PDF & Text Processing
+pymupdf
+langchain
+langchain-community
+
+# Vector Search & Embeddings
+sentence-transformers
+faiss-cpu
+numpy
+
+# AI Models & Environment
+groq
+python-dotenv

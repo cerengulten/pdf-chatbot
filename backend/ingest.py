@@ -16,8 +16,8 @@ def extract_pdf(pdf_path: str) -> str:
 # Getting text and splitting into smaller chunks for better processing and embedding 
 def text_split(text:str)-> list[str]:
   splitter = RecursiveCharacterTextSplitter(
-    chunk_size = 500,
-    chunk_overlap = 50
+    chunk_size = 1000, # changing it can change the answer of the question, as it changes the context provided to the model. 
+    chunk_overlap = 200
   )
   return splitter.split_text(text)
 
