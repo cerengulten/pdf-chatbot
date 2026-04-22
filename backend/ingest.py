@@ -28,15 +28,26 @@ def build_index(pdf_path: str, index_dir: str = "data/index"):
     Path(index_dir).mkdir(parents=True, exist_ok=True)
 
     text = extract_pdf(pdf_path)
+
+    # Edge case: scanned PDF or image-only PDF
+    if not text.strip():
+        raise ValueError(
+            "No text found in PDF. It may be a scanned image — "
+            "OCR support is not included in this version."
+        )
+
     chunks = text_split(text)
+
+    # Edge case: very short document
+    if len(chunks) == 0:
+        raise ValueError("Document is too short to index.")
+
     embeddings = embedding_chunks(chunks)
 
-    # Build FAISS index
     dim = embeddings.shape[1]
     index = faiss.IndexFlatL2(dim)
     index.add(embeddings)
 
-    # Save index and chunks side by side
     faiss.write_index(index, f"{index_dir}/index.faiss")
     with open(f"{index_dir}/chunks.pkl", "wb") as f:
         pickle.dump(chunks, f)

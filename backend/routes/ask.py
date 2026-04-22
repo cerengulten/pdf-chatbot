@@ -5,8 +5,13 @@ from backend.chat import ask_groq
 
 router = APIRouter()
 
+class Message(BaseModel):
+    role: str
+    content: str
+
 class AskRequest(BaseModel):
     question: str
+    history: list[Message] = []
 
 @router.post("/ask")
 async def ask(body: AskRequest):
@@ -21,7 +26,7 @@ async def ask(body: AskRequest):
             detail="No index found. Upload a PDF first."
         )
 
-    answer = ask_groq(body.question, chunks)
+    answer = ask_groq(body.question, chunks, body.history)
     return {
         "answer": answer,
         "sources": [c[:200] + "..." for c in chunks]

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Chatbot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>PDF Chatbot</h1>
+
+    <!-- Upload section -->
+    <div class="upload-section" id="upload-section">
+      <div class="drop-zone" id="drop-zone">
+        <p>Drop a PDF here or click to browse</p>
+        <input type="file" id="file-input" accept=".pdf" hidden />
+      </div>
+      <div class="upload-status" id="upload-status"></div>
+    </div>
+
+    <!-- Chat section (hidden until PDF uploaded) -->
+    <div class="chat-section hidden" id="chat-section">
+      <div class="chat-header">
+        <span id="doc-name"></span>
+        <button id="reset-btn">Upload new PDF</button>
+      </div>
+
+      <div class="messages" id="messages"></div>
+
+      <div class="input-row">
+        <input
+          type="text"
+          id="question-input"
+          placeholder="Ask something about your document..."
+        />
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
