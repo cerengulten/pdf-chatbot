@@ -1,4 +1,5 @@
 # 📄 PDF Chatbot
+<<<<<<< HEAD
 
 Upload any PDF and chat with it using semantic search + LLM-powered retrieval.
 
@@ -6,11 +7,20 @@ Built with **FastAPI**, **FAISS**, **Sentence Transformers**, and **Groq’s Lla
 
 ![Demo](assets/demo.gif)
 
+=======
+ 
+> Upload any PDF and have a conversation with it — powered by Groq's llama-3.3-70b-versatile model and semantic vector search.
+ 
+<!-- Add your demo GIF here — record 10-15 seconds with LICEcap or Peek -->
+![Demo](assets/demo.gif)
+ 
+>>>>>>> 912b58c595c9b0fccaf1cab17a0453bd5cc990f5
 ![Python](https://img.shields.io/badge/Python-3.11-blue?style=flat-square)
 ![FastAPI](https://img.shields.io/badge/FastAPI-backend-green?style=flat-square)
 ![Groq](https://img.shields.io/badge/Groq-llama--3.3--70b-orange?style=flat-square)
 ![FAISS](https://img.shields.io/badge/FAISS-vector--search-purple?style=flat-square)
 ![LangChain](https://img.shields.io/badge/LangChain-0.1-yellow?style=flat-square)
+<<<<<<< HEAD
 
 ---
 
@@ -213,3 +223,66 @@ Currently:
 ## 📄 License
 
 MIT
+=======
+ 
+---
+ 
+## What it does
+ 
+Most people have PDFs they need to extract information from — reports, research papers,
+contracts, documentation. Instead of manually searching through pages, this tool lets
+you upload any PDF and ask plain English questions about it. Answers include the exact
+source excerpts used, so you can verify them.
+ 
+---
+ 
+## How it works
+ 
+```
+1. PDF uploaded      → text extracted page by page with PyMuPDF
+2. Text chunked      → split into 500-char overlapping chunks via LangChain
+3. Chunks embedded   → converted to vectors with sentence-transformers (all-MiniLM-L6-v2)
+4. Vectors stored    → indexed locally with FAISS for fast similarity search
+5. Question asked    → question embedded → top 3 matching chunks retrieved
+6. Answer generated  → chunks + question sent to Groq API → answer streamed back
+```
+ 
+---
+ 
+## Stack
+ 
+| Layer      | Technology                                       |
+|------------|--------------------------------------------------|
+| Frontend   | HTML / CSS / JavaScript                          |
+| Backend    | FastAPI, Python                                  |
+| AI Model   | Groq API — llama-3.3-70b-versatile               |
+| Embeddings | sentence-transformers (all-MiniLM-L6-v2)         |
+| Vector DB  | FAISS (local)                                    |
+| PDF Parse  | PyMuPDF                                          |
+| Chunking   | LangChain RecursiveCharacterTextSplitter         |
+ 
+---
+ 
+## Project structure
+ 
+```
+pdf-chatbot/
+  backend/
+    main.py          # FastAPI app + CORS
+    ingest.py        # PDF → chunks → FAISS index
+    retriever.py     # question → top matching chunks
+    chat.py          # Groq API call with context
+    routes/
+      upload.py      # POST /upload
+      ask.py         # POST /ask
+  frontend/
+    index.html
+    style.css
+    app.js
+  data/
+    uploads/         # uploaded PDFs
+    index/           # FAISS index files
+  .env
+  requirements.txt
+```
+>>>>>>> 912b58c595c9b0fccaf1cab17a0453bd5cc990f5
