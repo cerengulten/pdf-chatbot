@@ -100,7 +100,7 @@ pdf-chatbot/
 ### 1 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/pdf-chatbot.git
+git clone https://github.com/cerengulten/pdf-chatbot.git
 cd pdf-chatbot
 python -m venv venv
 ```
