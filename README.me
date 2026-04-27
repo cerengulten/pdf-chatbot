@@ -1,41 +1,73 @@
-# PDF Chatbot
-
-Ask questions about any PDF document using Groq - llama-3.3-70b-versatile model as the AI backbone.
-
+# 📄 PDF Chatbot
+ 
+> Upload any PDF and have a conversation with it — powered by Groq's llama-3.3-70b-versatile model and semantic vector search.
+ 
+<!-- Add your demo GIF here — record 10-15 seconds with LICEcap or Peek -->
+![Demo](assets/demo.gif)
+ 
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=flat-square)
+![FastAPI](https://img.shields.io/badge/FastAPI-backend-green?style=flat-square)
+![Groq](https://img.shields.io/badge/Groq-llama--3.3--70b-orange?style=flat-square)
+![FAISS](https://img.shields.io/badge/FAISS-vector--search-purple?style=flat-square)
+![LangChain](https://img.shields.io/badge/LangChain-0.1-yellow?style=flat-square)
+ 
+---
+ 
+## What it does
+ 
+Most people have PDFs they need to extract information from — reports, research papers,
+contracts, documentation. Instead of manually searching through pages, this tool lets
+you upload any PDF and ask plain English questions about it. Answers include the exact
+source excerpts used, so you can verify them.
+ 
+---
+ 
+## How it works
+ 
+```
+1. PDF uploaded      → text extracted page by page with PyMuPDF
+2. Text chunked      → split into 500-char overlapping chunks via LangChain
+3. Chunks embedded   → converted to vectors with sentence-transformers (all-MiniLM-L6-v2)
+4. Vectors stored    → indexed locally with FAISS for fast similarity search
+5. Question asked    → question embedded → top 3 matching chunks retrieved
+6. Answer generated  → chunks + question sent to Groq API → answer streamed back
+```
+ 
+---
+ 
 ## Stack
-
-- Backend: FastAPI, LangChain, sentence-transformers, FAISS, Groq API
-- Frontend: Plain HTML/CSS/JS
-
-## Setup
-
-1. Clone the repo and create a virtual environment:
-   python -m venv venv
-   source venv/bin/activate
-
-2. Install dependencies:
-   pip install -r requirements.txt
-
-3. Add your GROQ API key:
-   Create a .env file in the project root:
-   GROQ_API_KEY=your_key_here
-
-4. Run the backend:
-   uvicorn backend.main:app --reload
-
-5. Serve the frontend:
-   cd frontend && python -m http.server 5500
-
-6. Open http://localhost:5500 in your browser.
-
-## Usage
-
-- Upload any PDF using the drag-and-drop zone
-- Ask questions in the chat input
-- Click "Show sources" under any answer to see the document excerpts used
-- Click "Upload new PDF" to start over with a different document
-
-## Limitations
-
-- Scanned / image-only PDFs are not supported (no OCR)
-- Only one PDF indexed at a time (uploading a new one replaces the index)
+ 
+| Layer      | Technology                                       |
+|------------|--------------------------------------------------|
+| Frontend   | HTML / CSS / JavaScript                          |
+| Backend    | FastAPI, Python                                  |
+| AI Model   | Groq API — llama-3.3-70b-versatile               |
+| Embeddings | sentence-transformers (all-MiniLM-L6-v2)         |
+| Vector DB  | FAISS (local)                                    |
+| PDF Parse  | PyMuPDF                                          |
+| Chunking   | LangChain RecursiveCharacterTextSplitter         |
+ 
+---
+ 
+## Project structure
+ 
+```
+pdf-chatbot/
+  backend/
+    main.py          # FastAPI app + CORS
+    ingest.py        # PDF → chunks → FAISS index
+    retriever.py     # question → top matching chunks
+    chat.py          # Groq API call with context
+    routes/
+      upload.py      # POST /upload
+      ask.py         # POST /ask
+  frontend/
+    index.html
+    style.css
+    app.js
+  data/
+    uploads/         # uploaded PDFs
+    index/           # FAISS index files
+  .env
+  requirements.txt
+```
